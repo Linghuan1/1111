@@ -24,7 +24,7 @@ def load_model(path):
         print("模型加载成功") # 控制台输出加载成功信息
         return model
     except FileNotFoundError:
-        st.error(f"错误: 模型文件 {path} 未找到。请确保模型文件在同一目录下。") # 在网页上显示错误信息
+        st.error(f"错误: 模型文件 {path} 未找到。请确保模型文件在同一目录下") # 在网页上显示错误信息
         print(f"错误: 文件 {path} 未找到") # 控制台输出错误信息
         return None
     except Exception as e:
@@ -66,7 +66,7 @@ origin_options = {
 
 # --- Streamlit 界面 ---
 st.title("📊 B站番剧总播放量预测器") # 应用主标题
-st.markdown("使用训练好的随机森林模型，根据输入的番剧特征预测其总播放量（万）。") # 应用描述
+st.markdown("使用训练好的随机森林模型，根据输入的番剧特征预测其总播放量（万）") # 应用描述
 
 # --- 输入区域 ---
 st.sidebar.header("⚙️ 请输入番剧特征") # 侧边栏标题
@@ -103,7 +103,7 @@ with topic_cols[3]:
 with topic_cols[4]:
     topic4 = st.number_input("Topic 4:", min_value=0.0, max_value=1.0, value=0.12, step=0.01, format="%.2f")
 
-# 检查Topic权重和是否接近1 (可选，给用户提示)
+# 检查Topic权重和是否接近1 
 topic_sum = topic0 + topic1 + topic2 + topic3 + topic4
 if not np.isclose(topic_sum, 1.0, atol=0.05): # 允许一点误差
     st.sidebar.warning(f"注意: Topic权重的总和 ({topic_sum:.2f}) 不等于 1。请检查输入。")
@@ -151,18 +151,16 @@ if st.sidebar.button("🚀 预测总播放量", type="primary"): # 添加预测�
             st.markdown("""
             ---
             **说明:**
-            *   该预测结果基于输入的特征和训练好的随机森林模型。
-            *   实际播放量可能受多种未包含因素（如推广力度、实时热点、用户评论氛围等）的影响。
-            *   结果仅供参考。
+            *   该预测结果基于输入的特征和训练好的随机森林模型
             """)
 
         except KeyError as e:
-            st.error(f"输入数据准备错误: 缺少特征 {str(e)}。请检查代码或输入。") # 处理特征名称不匹配错误
+            st.error(f"输入数据准备错误: 缺少特征 {str(e)}。请检查代码或输入") # 处理特征名称不匹配错误
         except Exception as e:
             st.error(f"预测过程中发生错误: {str(e)}") # 处理其他预测错误
 
     else:
-        st.error("模型未能成功加载，无法进行预测。") # 如果模型未加载，提示用户
+        st.error("模型未能成功加载，无法进行预测") # 如果模型未加载，提示用户
 
 # --- 页脚信息 (可选) ---
 st.sidebar.markdown("---")
